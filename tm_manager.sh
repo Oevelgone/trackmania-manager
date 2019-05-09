@@ -97,7 +97,7 @@ declare MANIACONTROL_CONFIG_DIR="configs"
 declare USER_INTERFACE=false
 declare UI_LOOP=false
 
-declare -r bin_to_check="php"
+declare -r bin_to_check="jq"
 declare manager_config_file="${SCRIPT_LOCATION}/config"
 declare -g current_server="all"
 
@@ -113,12 +113,12 @@ source ${SCRIPT_LOCATION}/includes/ui.sh
 
 function parse_args() { #Parameters -- $@ {{{
 LOG LDEBUG "Called function ${FUNCNAME[0]} with parameters \"$(echo $@)\""
-eval set -- "$@ --"
+eval set "${@}" --
 while [ ! -z ${1:x} ]; do
     LOG LDEBUG "Arg 1 is : ${1:-empty}"
     case "${1}" in
         install)
-            install_server
+            install_server "${2%--}"
             ;;
         start|stop|status|info)
             local action="${1}"
@@ -169,11 +169,7 @@ printf '%s' "$(awk "/<${section}>/,/<\/${section_close}>/" "${l_config_file}" | 
 #}}}
 
 # Servers action functions {{{
-function install_server() { #Parameters --  {{{
-LOG LDEBUG "Called function ${FUNCNAME[0]} with parameters \"$(echo $@)\""
-LOG LDEFAULT "This function is not implemented yet."
-exit 0
-} #}}}
+source ${SCRIPT_LOCATION}/modules/server_install.sh
 function start_server() { #Parameters --  {{{
 LOG LDEBUG "Called function ${FUNCNAME[0]} with parameters \"$(echo $@)\""
 LOG LVERBOSE "Start server ${1}"
@@ -611,6 +607,9 @@ done
 
 # MAIN
 
+# Check for missing binarys
+bin_check "${bin_to_check}"
+
 # Read config file
 LOG LDEBUG "loading config"
 check_file "${manager_config_file}" R && {
@@ -631,7 +630,7 @@ if [ "${USER_INTERFACE}" == "true" ]; then
     clear
 else
     LOG LDEBUG "parsing args"
-    parse_args $@
+    parse_args "${ARGS}"
 fi
 
 exit 0
