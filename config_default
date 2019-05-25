@@ -1,24 +1,36 @@
 #!/bin/bash
+#shellcheck disable=SC2034
 
 #######################################################################################################################
 ############################################### CUSTOMIZE THIS SETTINGS ###############################################
 #######################################################################################################################
 #declare SERVERS_ROOT_DIRECTORY="/path/to/your/servers"
-declare -A SERVERS_LIST=( #DO NOT MODIFY THIS LINE
-## -- Define your servers names (separated by a space) ex: [server.list]="server_esl server_rpg"
+declare -A SERVERS+=( #DO NOT MODIFY THIS LINE
+## -- Define your servers names (separated by a space) ex: [list]="server_esl server_rpg"
 [list]=""
 
 ## -- Only server name is required if your directory use the same name and you respect following defaults
 ## -- else copy this defaults (replace SERVER_NAME with the name you just defined above) and define your settings
 #
-#[SERVER_NAME.dir]="relative/path/to/server/from/servers/root/directory/",
-#[SERVER_NAME.config_file]="dedicated_cfg.txt", [SERVER_NAME.config_dir]="UserData/Config",
-#[SERVER_NAME.tracklist]="tracklist.txt", [SERVER_NAME.tracklist_dir]="UserData/Maps/MatchSettings"
-#[SERVER_NAME.maniacontrol_config]="server.xml"
+#[SERVER_NAME,dir]="relative/path/to/server/from/servers/root/directory/"
+#[SERVER_NAME,config_file]="dedicated_cfg.txt" [SERVER_NAME,config_dir]="UserData/Config"
+#[SERVER_NAME,tracklist]="tracklist.txt" [SERVER_NAME,tracklist_dir]="UserData/Maps/MatchSettings"
+#[SERVER_NAME,controller]="maniaplanet" [SERVER_NAME,maniacontrol_config]="server.xml"
 
 ) # DO NOT MODIFY THIS LINE
 
+## Controllers
+#declare CONTROLLER_ADMINS="your_user_login"
+
 #Your Maniacontrol directory either relative link from SERVERS_ROOT_DIRECTORY or absolute path
 #declare MANIACONTROL_DIRECTORY="ManiaControl"
+
+#Your PyPlanet directory either relative link from SERVERS_ROOT_DIRECTORY or absolute path
+#declare PYPLANET_DIRECTORY="pyplanet"
+
+## Database
+#declare DATABASE_HOST="localhost"
+#declare DATABASE_USER="user"
+#declare DATABASE_PASSWORD="password"
 
 #######################################################################################################################

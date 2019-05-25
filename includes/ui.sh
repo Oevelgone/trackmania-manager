@@ -1,8 +1,8 @@
 #!/bin/bash
-# shellcheck disable=
+#shellcheck disable=
 
 ###############################################################################
-#Set of common functions used in most of my scripts
+#Set of UI functions used in most of my scripts
 #Copyright (C) 2018 Navarra Manuel
 #Contact : admin[at]icp[dot]ovh
 
@@ -54,17 +54,18 @@ for element in "${@:2}"; do [[ "${element}" == "${1}" ]] && break; done;
 } #}}}
 function copy_associative_array() { # {{{
 for key in $(eval "echo \${!${1:?$(ui_error '$1 not defined')}[@]}"); do
-   eval "${2:?$(ui_error '$2 not defined')}[${key}]=\"$(eval "echo \${${1:?$(ui_error '$1 not defined')}[${key}]}")\""
+    eval "${2:?$(ui_error '$2 not defined')}[${key}]=\"$(eval "echo \${${1:?$(ui_error '$1 not defined')}[${key}]}")\""
 done
 } #}}}
 function array_index() { #Parameters -- 1:(str) value, 3:(array) {{{
 local i=0
 for value in "${@:2}"; do
-    if [[ "${1:?$(ui_error '$1 not defined')}" == "${value}" ]]; then
+    if [[ "${1:?$(ui_error '$1 not defined')}" == "${value}"  ]]; then
         printf '%d' "${i}"
     fi
     ((i++))
 done
+
 } #}}}
 function copy_var() { # Parameters -- 1:(str) original_var_name, 2:(str) new_var_name
 eval "$(declare -p ${1:?$(ui_error 'Missing arg1')} | sed "s/${1}=/ -g ${2:?$(ui_error 'Missing arg2')}=/g")"
@@ -72,7 +73,7 @@ eval "$(declare -p ${1:?$(ui_error 'Missing arg1')} | sed "s/${1}=/ -g ${2:?$(ui
 #}}}
 #Print functions, based on the functions from aui by helmuthdu {{{
 function pause_key() { #{{{
-    read -sn 1 -p "
+read -sn 1 -p "
 Press any key to continue..."
 } #}}}
 function print_line() { #{{{
